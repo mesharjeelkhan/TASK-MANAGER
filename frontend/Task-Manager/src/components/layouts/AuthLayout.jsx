@@ -1,5 +1,5 @@
 import React from 'react'
-import twitter from "../../assets/Twitter.png";
+import twitter from "../../assets/twitter.png";
 
 
 const AuthLayout = ({ children }) => {
