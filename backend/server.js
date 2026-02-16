@@ -2,43 +2,37 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-const connectDB = require("./config/db");
+const connectDB = require("../backend/config/db");
 
-const authRoutes = require("./routes/authRoutes");
-const userRoutes = require("./routes/userRoutes"); // Not Working
-const taskRoutes = require("./routes/taskRoutes");
-const reportRoutes = require("./routes/reportRoutes");
+const authRoutes = require("../backend/routes/authRoutes");
+const userRoutes = require("../backend/routes/userRoutes");
+const taskRoutes = require("../backend/routes/taskRoutes");
+const reportRoutes = require("../backend/routes/reportRoutes");
 
 const app = express();
 
-//MiddleWare on handle cors
+// CORS
 app.use(
-    cors({
-         origin: process.env.CLIENT_URL || "*",
-         methods: ["GET", "POST", "PUT", "DELETE"],
-         allowedHeaders: ["Content-Type", "Authorization"],
-    })
+  cors({
+    origin: process.env.CLIENT_URL || "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
 );
 
+// DB connect
+connectDB();
 
-    //Connect Databae, : -
-    connectDB();
-
-
-//MiddleWare
+// Middleware
 app.use(express.json());
 
+// Routes
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/tasks", taskRoutes);
+app.use("/api/reports", reportRoutes);
 
+// Static uploads
+app.use("/uploads", express.static(path.join(__dirname, "../backend/uploads")));
 
-    //Routes
-     app.use("/api/auth/",authRoutes);
-     app.use("/api/users",userRoutes);
-     app.use("/api/tasks", taskRoutes);
-     app.use("/api/reports", reportRoutes);
-
-    // Serve uploads Folder
-    app.use ("/uploads", express.static(path.join(__dirname, "uploads")));
-
-//  Start Server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+module.exports = app;
