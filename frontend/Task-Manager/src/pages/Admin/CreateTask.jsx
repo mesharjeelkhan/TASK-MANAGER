@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import moment from "moment";
 import { LuTrash2 } from "react-icons/lu";
 
-import SelectDropdown from "../../components/inputs/SelectDropdown";
+import SelectDropdown from "../../components/Inputs/SelectDropdown";
 import SelectUsers from '../../components/Inputs/SelectUsers';
 import TodoListInput from '../../components/Inputs/TodoListInput';
 import AddAttachmentsInput from '../../components/Inputs/AddAttachmentsInput';
